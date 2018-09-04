@@ -1,8 +1,18 @@
-FROM php:7.1.8-apache
+FROM centos:7
 
-COPY pdo/ /srv/app/public
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+RUN yum install -y epel-release yum-utils \
+    yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    
 
+RUN yum-config-manager --enable remi-php71
 
-RUN docker-php-ext-install mbstring pdo pdo_mysql \
-        && chown -R www-data:www-data /srv/app
+RUN yum install -y php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysql git
+
+#RUN cd /var/www/html/
+RUN git clone https://github.com/rajanandv/pdo.git /var/www/html
+
+#COPY pdo/ /var/www/html 
+
+EXPOSE  80
+
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

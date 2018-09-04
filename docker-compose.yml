@@ -4,9 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: sample-php-mysql
+    image: my-apache-php
     ports:
-      - 8080:80
+      - 9999:80
     links:
       - mysql
     environment:
@@ -23,3 +23,4 @@ services:
       MYSQL_USER: myapp
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
+  
